@@ -1,0 +1,4 @@
+# The application uses only Python's standard library.
+# Python 3.11 or newer is recommended.
+customtkinter>=5.2
+matplotlib>=3.8

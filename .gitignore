@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+.venv/
+data/portfolio.db
+data/exports/*
+!data/exports/.gitkeep
+data/settings.json
+*.log
+*.png
