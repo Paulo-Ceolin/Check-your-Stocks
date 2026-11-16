@@ -1,6 +1,11 @@
 from collections.abc import Iterable, Mapping
+from datetime import datetime, time, timedelta, timezone
+from zoneinfo import ZoneInfo
 
 from tracker.models import PositionResult
+
+CHART_PERIODS = ("Today", "Last 7 days", "Last 30 days")
+CHICAGO = ZoneInfo("America/Chicago")
 
 
 def format_gain_loss(value: float) -> str:
@@ -14,6 +19,34 @@ def value_series(snapshots: Iterable[Mapping]) -> list[tuple[str, float]]:
 
 def cost_basis_series(snapshots: Iterable[Mapping]) -> list[tuple[str, float]]:
     return [(row["taken_at"], float(row["total_cost"])) for row in snapshots]
+
+
+def filter_series_by_period(
+    snapshots: Iterable[Mapping], period: str, now: datetime
+) -> list[Mapping]:
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    now_utc = now.astimezone(timezone.utc)
+    if period == "Today":
+        local_midnight = datetime.combine(
+            now_utc.astimezone(CHICAGO).date(), time.min, tzinfo=CHICAGO
+        )
+        cutoff = local_midnight.astimezone(timezone.utc)
+    elif period == "Last 7 days":
+        cutoff = now_utc - timedelta(days=7)
+    elif period == "Last 30 days":
+        cutoff = now_utc - timedelta(days=30)
+    else:
+        raise ValueError(f"Unknown chart period: {period}")
+
+    filtered = []
+    for snapshot in snapshots:
+        taken_at = datetime.fromisoformat(str(snapshot["taken_at"]).replace("Z", "+00:00"))
+        if taken_at.tzinfo is None:
+            taken_at = taken_at.replace(tzinfo=timezone.utc)
+        if taken_at.astimezone(timezone.utc) >= cutoff:
+            filtered.append(snapshot)
+    return filtered
 
 
 def allocation_percentages(

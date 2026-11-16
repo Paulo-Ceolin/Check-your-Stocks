@@ -21,27 +21,27 @@ The SQLite database is created at `data/portfolio.db`; exports are written to
 
 The current release is documented in [VERSION.md](VERSION.md).
 
-## Desktop widget (Version 0.2)
+## Desktop app
 
-Install the optional UI dependencies and launch the widget:
+Install the optional UI dependencies and launch the desktop app:
 
 ```powershell
 python -m pip install -r requirements.txt
 python main.py --gui
 ```
 
-The widget uses the same Yahoo Finance public chart endpoint as the terminal
-app and does not require an API key. It stores UI overrides in
+The desktop app uses the same Yahoo Finance public chart endpoint as the
+terminal app and does not require an API key. It stores UI overrides in
 `data/settings.json`. The default chart shows saved portfolio history; use
 **Save snapshot** to begin tracking it. If fewer than two snapshots exist, the
 chart displays an empty-state message.
 
-The widget is a wide dark finance dashboard (minimum 1000 x 640) with summary
+The app is a wide dark finance dashboard (minimum 1000 x 640) with summary
 cards, an aligned holdings table, side-by-side value-history and allocation
 charts, refresh status, and footer actions for managing holdings, snapshots,
 and CSV export.
 
-![Version 0.2 desktop widget screenshot placeholder](docs/widget-screenshot.png)
+![Desktop app screenshot placeholder](docs/widget-screenshot.png)
 
 ## Development
 

@@ -1,4 +1,4 @@
-# Version 0.1
+# Version 0.2
 
 ## Capabilities
 
@@ -16,7 +16,8 @@
 
 ## Appearance
 
-Version 0.1 is a terminal-based application. When launched, it displays the
+Version 0.2 includes a desktop application alongside the terminal launcher. When
+launched without `--gui`, it displays the
 title **Crypto & Stock Portfolio Tracker**, followed by a numbered menu:
 
 ```text

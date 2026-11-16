@@ -11,7 +11,6 @@ VALID_CHARTS = {"value", "allocation"}
 
 def validate_settings(values: dict) -> dict:
     result = deepcopy(DEFAULT_SETTINGS)
-    result["widget_mode"] = False
     if not isinstance(values, dict):
         return result
     if isinstance(values.get("auto_refresh"), bool):
@@ -29,8 +28,6 @@ def validate_settings(values: dict) -> dict:
         result["default_chart"] = values["default_chart"]
     if isinstance(values.get("always_on_top"), bool):
         result["always_on_top"] = values["always_on_top"]
-    if isinstance(values.get("widget_mode"), bool):
-        result["widget_mode"] = values["widget_mode"]
     return result
 
 
